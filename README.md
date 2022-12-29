@@ -1,12 +1,9 @@
 <p align="center">
-<img src="https://i.imgur.com/pU5A58S.png" alt="Microsoft Active Directory Logo"/>
+<img src="https://i.imgur.com/Ua7udoS.png" alt="Traffic Examination"/>
 </p>
 
-<h1>On-premises Active Directory Deployed in the Cloud (Azure)</h1>
-This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines.<br />
-
-
-
+<h1>Network Security Groups (NSGs) and Inspecting Traffic Between Azure Virtual Machines</h1>
+In this tutorial, we observe various network traffic to and from Azure Virtual Machines with Wireshark as well as experiment with Network Security Groups. <br />
 
 
 
@@ -14,61 +11,71 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 - Microsoft Azure (Virtual Machines/Compute)
 - Remote Desktop
-- Active Directory Domain Services
-- PowerShell
+- Various Command-Line Tools
+- Various Network Protocols (SSH, RDH, DNS, HTTP/S, ICMP)
+- Wireshark (Protocol Analyzer)
 
 <h2>Operating Systems Used </h2>
 
-- Windows Server 2022
 - Windows 10 (21H2)
+- Ubuntu Server 20.04
 
-<h2>High-Level Deployment and Configuration Steps</h2>
+<h2>High-Level Steps</h2>
 
-- Step 1
-- Step 2
-- Step 3
-- Step 4
+- Create Resources
+- Observe ICMP Traffic
+- Observe SSH Traffic)
+- Observe DHCP Traffic
+- Observe DNS Traffic
 
-<h2>Deployment and Configuration Steps</h2>
+<h2>Actions and Observations</h2>
 
 <p>
-<img src="https://i.imgur.com/gRvLkd5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/R21OQ1i.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In step 1, the Resources in Azure were setup. The Domain Controller VM (Windows Server 2022) named “DC-1” was created while simultaneously creating the Resource Group and Virtual Network (Vnet). The Domain Controller’s NIC Private IP address was set to static. The Client VM (Windows 10) named “Client-1” was created with the same Resource Group and Vnet that was created in DC-1. The topology was checked with the Network Watcher, to ensure both VM's were in the same network. 
-
-
+ A resource group and 2 virtual machines (Microsoft 10 and Linux) were created.
 </p>
-<br /> 
+<br />
 
 <p>
-<img src="https://i.imgur.com/vCZMGfK.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/doywL1t.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In step 2, Connectivity between the client and Domain Controller was ensured by logging into Client-1 with Remote Desktop and pinging DC-1’s private IP address with ping -t <ip address> (perpetual ping). ICMPv4 were enabled on the local windows Firewall. After logging back into Client-1 check to make sure the ping is successful. 
-
- 
+Within Windows 10 Virtual Machine, Wireshark was installed. In Wireshark ICMP traffic was flitered. The private IP address was retrieved of the Ubuntu VM and pinged from within the Windows 10 VM. Observed ping requests and replies within WireShark. From the Windows 10 VM,  PowerShell was opened and a public website (www.google.com) was pinged. A perpetual/non-stop ping was initiated from Windows 10 VM Ubuntu VM. Network Security Group was opened on Ubuntu VM. Incoming (inbound) ICMP traffic was disabled. In Windows 10 VM, observe the ICMP traffic in WireShark and the command line Ping activity. ICMP traffic was re-enabled for the Network Security Group on the Ubuntu VM. In Windows 10 VM, the ICMP traffic was observed in WireShark and the command line ping activity.
 
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/7g0Byol.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/qCTHzgS.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In step 3, Active Directory Domain Services was Installed by logging in to DC-1. Promoted as a DC: a new forest as mydomain.com was setup. Remote Desktop was Restarted and logged back into DC-1 as user: mydomain.com\labuser.
-</p>
-<br />
+In Wireshark, "SSH traffic only" was filtered. From Windows 10 VM, “SSH into” Ubuntu Virtual Machine (via its private IP address). Using commands such as ls, pwd, etc, type into the linux SSH was used to connect. SSH traffic is observed spamming in WireShark. The SSH connection can be exited, by typing ‘exit’ and pressing [Enter].
+
 
 </p>
 <br />
 
 <p>
-<img src="https://i.imgur.com/GbbLxQW.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://i.imgur.com/s0wzQ1y.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In step 4, Remote Desktop was setup for non-administrative users jane_admin was used a the user name,
-PowerShell_ise was opened as an administrator. A new File was created and pasted into the contents of the script. When the script is run, account will created. The accounts can now be viewed in Active Directory in the appropriate organizational unit.
+In Wireshark, "DHCP traffic only" was filtered. From Windows 10 VM, a new IP address was issued from the command line (ipconfig /renew). Now DHCP traffic can be observed in WireShark.
 
-  
+
 </p>
+<br />
+
+<p>
+<img src="https://i.imgur.com/6Ysh565.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+</p>
+<p>
+In Wireshark, DNS traffic "only" was filtered. Using Windows 10 VM within a command line, nslookup was used to see what google.com and disney.com’s IP addresses were. The DNS traffic was then observed in WireShark.
+
+
+
+
+
+</p>
+<br />
