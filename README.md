@@ -20,21 +20,19 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 - Windows 10 (21H2)
 - Ubuntu Server 20.04
 
-<h2>High-Level Steps</h2>
+<h2>Objectives</h2>
 
-- Create Resources
 - Observe ICMP Traffic
-- Observe SSH Traffic)
+- Observe SSH Traffic
 - Observe DHCP Traffic
-- Observe DNS Traffic
+- Observe TCP == 39 Traffic
 
-<h2>Actions and Observations</h2>
+<h2></h2>
 
 <p>
-<img src="https://i.imgur.com/XUtK6l6.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
- A resource group and 2 virtual machines (Microsoft 10 and Linux) were created.
+Two virtual machines(VMs)-Microsoft 10 and Ubuntu-were created.
 </p>
 <br />
 
@@ -42,7 +40,7 @@ In this tutorial, we observe various network traffic to and from Azure Virtual M
 <img src="https://i.imgur.com/w2FjOYl.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-Within Windows 10 Virtual Machine, Wireshark was installed. In Wireshark ICMP traffic was flitered. The private IP address was retrieved of the Ubuntu VM and pinged from within the Windows 10 VM. Observed ping requests and replies within WireShark. From the Windows 10 VM,  PowerShell was opened and a public website (www.google.com) was pinged. A perpetual/non-stop ping was initiated from Windows 10 VM Ubuntu VM. Network Security Group was opened on Ubuntu VM. Incoming (inbound) ICMP traffic was disabled. In Windows 10 VM, observe the ICMP traffic in WireShark and the command line Ping activity. ICMP traffic was re-enabled for the Network Security Group on the Ubuntu VM. In Windows 10 VM, the ICMP traffic was observed in WireShark and the command line ping activity.
+To monitor the ICMP traffic between two virtual machines, Wireshark was installed on a Windows 10 virtual machine. The private IP address of an Ubuntu virtual machine was retrieved and pinged from within the Windows 10 virtual machine. The ping requests and replies were then observed in Wireshark and the command line ping activity was monitored in the Windows 10 virtual machine.
 
 </p>
 <br />
@@ -51,7 +49,7 @@ Within Windows 10 Virtual Machine, Wireshark was installed. In Wireshark ICMP tr
 <img src="https://i.imgur.com/SsYlNMb.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In Wireshark, "SSH traffic only" was filtered. From Windows 10 VM, “SSH into” Ubuntu Virtual Machine (via its private IP address). Using commands such as ls, pwd, etc, type into the linux SSH was used to connect. SSH traffic is observed spamming in WireShark. The SSH connection can be exited, by typing ‘exit’ and pressing [Enter].
+In the Windows 10 virtual machine, Wireshark was used to filter for SSH traffic. From the Windows 10 virtual machine, SSH was used to access the Ubuntu virtual machine using its private IP address. The SSH traffic was then observed in Wireshark.Is is also possible tp log  into the Ubuntu virtual machine from the command line in the Windows virtual machine to observe additional traffic.
 
 
 </p>
@@ -61,8 +59,7 @@ In Wireshark, "SSH traffic only" was filtered. From Windows 10 VM, “SSH into�
 <img src="https://i.imgur.com/LjarY7e.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In Wireshark, "DHCP traffic only" was filtered. From Windows 10 VM, a new IP address was issued from the command line (ipconfig /renew). Now DHCP traffic can be observed in WireShark.
-
+Filter for "DHCP" traffic. From within the Windows 10 virtual machine, issue a new IP address using the command line by typing "ipconfig /renew." This will allow you to observe DHCP traffic in Wireshark.
 
 </p>
 <br />
@@ -71,7 +68,7 @@ In Wireshark, "DHCP traffic only" was filtered. From Windows 10 VM, a new IP add
 <img src="https://i.imgur.com/eGygRWe.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 </p>
 <p>
-In Wireshark, DNS traffic "only" was filtered. Using Windows 10 VM within a command line, nslookup was used to see what google.com and disney.com’s IP addresses were. The DNS traffic was then observed in WireShark.
+To view TCP traffic in Wireshark, filter for "tcp port== 3389" and observe the constant traffic that is shown in the Windows 10 virtual machine due to the remote connection to the VM. This traffic includes mouse strokes, keyboard clicks, and other activity in the VM.
 
 
 
